@@ -10,46 +10,26 @@
     <h1 id="time" style="color:#FFFFFF; text-align:center; font-family:Comic Sans MS, Arial;">Time</h1>
 
     <script>
-        // 変数
-        let amPm = "";
-        let date = new Date();
-        let hour = 0;
-        let min = 0;
-        let sec = 0;
-
         // 時間更新処理
-        async function updateClock(){
-            while (true){
-                // データ格納
-                date = new Date;
-                hour = date.getHours();
-                min = date.getMinutes();
-                sec = date.getSeconds();
+        async function updateClock() {
+            while (true) {
+                // 変数
+                const date = new Date
+                const hour = date.getHours();
+                const min = date.getMinutes();
+                const sec = date.getSeconds();
 
                 // AM/PM処理
-                if (hour < 12){
-                    amPm = "AM";
-                }
-                else {
-                    amPm = "PM";
-                    hour = hour - 12;
-                }
+                const isAm = hour < 12;
 
-                // 型変換
-                hour = String(hour);
-                min = String(min);
-                sec = String(sec);
-
-                // 見栄え処理
-                if (min.length == 1){
-                    min = "0" + min;
-                }
-                if (sec.length == 1){
-                    sec = "0" + sec;
-                }
+                // 表示用の変数
+                const shownHour = (isAm ? hour : hour - 12).toString(); // 午前ならそのまま、午後なら時間から-12する
+                const shownMin = min.toString().padStart("0", 2); // 必ず二桁にになる。足りない場合は最初に0を入れて補う
+                const shownSec = sec.toString().padStart("0", 2);
+                const hourLabel = isAm ? "AM" : "PM";
 
                 // 表示更新
-                document.getElementById('time').textContent = amPm + hour + ":" + min + ":" + sec;
+                document.getElementById('time').textContent = hourLabel + shownHour + ":" + shownMin + ":" + shownSec;
 
                 // 待機
                 await sleep(1000);
@@ -57,15 +37,12 @@
         }
 
         // 待機処理
-        function sleep(Sleep_Time){
-            return new Promise(function(resolve){
-            setTimeout(resolve,Sleep_Time);
-            });
+        function sleep(sec){
+            return new Promise(resolve => setTimeout(resolve, sec));
         }
 
         // 実行
         updateClock();
-
     </script>
 </body>
 </html>
