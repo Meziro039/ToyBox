@@ -7,64 +7,64 @@
     <title>Clock</title>
 </head>
 <body style="background-color:#00FF00;">
-    <h1 id="Time" style="color:#FFFFFF; text-align:center; font-family:Comic Sans MS, Arial;">Time</h1>
+    <h1 id="time" style="color:#FFFFFF; text-align:center; font-family:Comic Sans MS, Arial;">Time</h1>
 
     <script>
         // 変数
-        let am_pm = "";
-        let Dates = new Date();
-        let Hour = 0;
-        let Min = 0;
-        let Sec = 0;
+        let amPm = "";
+        let date = new Date();
+        let hour = 0;
+        let min = 0;
+        let sec = 0;
 
         // 時間更新処理
-        async function ClockUpdate(){
+        async function updateClock(){
             while (true){
                 // データ格納
-                Dates = new Date;
-                Hour = Dates.getHours();
-                Min = Dates.getMinutes();
-                Sec = Dates.getSeconds();
+                date = new Date;
+                hour = date.getHours();
+                min = date.getMinutes();
+                sec = date.getSeconds();
 
                 // AM/PM処理
-                if (Hour < 12){
-                    am_pm = "AM";
+                if (hour < 12){
+                    amPm = "AM";
                 }
                 else {
-                    am_pm = "PM";
-                    Hour = Hour - 12;
+                    amPm = "PM";
+                    hour = hour - 12;
                 }
 
                 // 型変換
-                Hour = String(Hour);
-                Min = String(Min);
-                Sec = String(Sec);
+                hour = String(hour);
+                min = String(min);
+                sec = String(sec);
 
                 // 見栄え処理
-                if (Min.length == 1){
-                    Min = "0" + Min;
+                if (min.length == 1){
+                    min = "0" + min;
                 }
-                if (Sec.length == 1){
-                    Sec = "0" + Sec;
+                if (sec.length == 1){
+                    sec = "0" + sec;
                 }
 
                 // 表示更新
-                document.getElementById('Time').textContent = am_pm + Hour + ":" + Min + ":" + Sec;
+                document.getElementById('time').textContent = amPm + hour + ":" + min + ":" + sec;
 
                 // 待機
-                await Sleep(1000);
+                await sleep(1000);
             }
         }
 
         // 待機処理
-        function Sleep(Sleep_Time){
+        function sleep(Sleep_Time){
             return new Promise(function(resolve){
             setTimeout(resolve,Sleep_Time);
             });
         }
 
         // 実行
-        ClockUpdate();
+        updateClock();
 
     </script>
 </body>
