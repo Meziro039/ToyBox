@@ -24,8 +24,8 @@
 
                 // 表示用の変数
                 const shownHour = (isAm ? hour : hour - 12).toString(); // 午前ならそのまま、午後なら時間から-12する
-                const shownMin = min.toString().padStart("0", 2); // 必ず二桁にになる。足りない場合は最初に0を入れて補う
-                const shownSec = sec.toString().padStart("0", 2);
+                const shownMin = min.toString().padStart(2, "0"); // 必ず二桁にになる。足りない場合は最初に0を入れて補う
+                const shownSec = sec.toString().padStart(2, "0");
                 const hourLabel = isAm ? "AM" : "PM";
 
                 // 表示更新
