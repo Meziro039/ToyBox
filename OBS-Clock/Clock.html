@@ -7,65 +7,42 @@
     <title>Clock</title>
 </head>
 <body style="background-color:#00FF00;">
-    <h1 id="Time" style="color:#FFFFFF; text-align:center; font-family:Comic Sans MS, Arial;">Time</h1>
+    <h1 id="time" style="color:#FFFFFF; text-align:center; font-family:Comic Sans MS, Arial;">Time</h1>
 
     <script>
-        // 変数
-        let am_pm = "";
-        let Dates = new Date();
-        let Hour = 0;
-        let Min = 0;
-        let Sec = 0;
-
         // 時間更新処理
-        async function ClockUpdate(){
-            while (true){
-                // データ格納
-                Dates = new Date;
-                Hour = Dates.getHours();
-                Min = Dates.getMinutes();
-                Sec = Dates.getSeconds();
+        async function updateClock() {
+            while (true) {
+                // 変数
+                const date = new Date;
+                const hour = date.getHours();
+                const min = date.getMinutes();
+                const sec = date.getSeconds();
 
                 // AM/PM処理
-                if (Hour < 12){
-                    am_pm = "AM";
-                }
-                else {
-                    am_pm = "PM";
-                    Hour = Hour - 12;
-                }
+                const isAm = hour < 12;
 
-                // 型変換
-                Hour = String(Hour);
-                Min = String(Min);
-                Sec = String(Sec);
-
-                // 見栄え処理
-                if (Min.length == 1){
-                    Min = "0" + Min;
-                }
-                if (Sec.length == 1){
-                    Sec = "0" + Sec;
-                }
+                // 表示用の変数
+                const shownHour = (isAm ? hour : hour - 12).toString(); // 午前ならそのまま、午後なら時間から-12する
+                const shownMin = min.toString().padStart(2, "0"); // 必ず二桁にになる。足りない場合は最初に0を入れて補う
+                const shownSec = sec.toString().padStart(2, "0");
+                const hourLabel = isAm ? "AM" : "PM";
 
                 // 表示更新
-                document.getElementById('Time').textContent = am_pm + Hour + ":" + Min + ":" + Sec;
+                document.getElementById('time').textContent = hourLabel + shownHour + ":" + shownMin + ":" + shownSec;
 
                 // 待機
-                await Sleep(1000);
+                await sleep(1000);
             }
         }
 
         // 待機処理
-        function Sleep(Sleep_Time){
-            return new Promise(function(resolve){
-            setTimeout(resolve,Sleep_Time);
-            });
+        function sleep(sec){
+            return new Promise(resolve => setTimeout(resolve, sec));
         }
 
         // 実行
-        ClockUpdate();
-
+        updateClock();
     </script>
 </body>
 </html>
